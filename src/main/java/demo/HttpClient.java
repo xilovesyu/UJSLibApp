@@ -46,14 +46,14 @@ public class HttpClient {
 	private CloseableHttpClient httpclient = null;
 	BasicCookieStore cookieStore = null;
 	String name = "2211508055";
-	String pass = "2211508055";
+	String pass = "xyxx1231";
 	String loginpage = "http://huiwen.ujs.edu.cn:8080/reader/login.php";
 	String yanzheng = "http://huiwen.ujs.edu.cn:8080/reader/captcha.php";
 	String url = "http://huiwen.ujs.edu.cn:8080/reader/redr_verify.php";
 	String read_info = "http://huiwen.ujs.edu.cn:8080/reader/redr_info.php";
 	String current_book = "http://huiwen.ujs.edu.cn:8080/reader/book_lst.php";
 	String user_detail="http://huiwen.ujs.edu.cn:8080/reader/redr_info_rule.php";
-	File cookiefile = new File("cookie/cookie.txt");
+	File cookiefile = new File("cookie"+File.separator+"cookie.txt");
 	public void setName(String name){
 		this.name=name;
 	}
@@ -67,26 +67,9 @@ public class HttpClient {
 	public HttpClient(String name,String pass){
 		this.name=name;
 		this.pass=pass;
-		cookiefile=new File("cookie/"+name+"Cookie.txt");
+		cookiefile=new File("cookie"+File.separator+name+"Cookie.txt");
 	}
-	public InputStream Get_InputStream(String uri) {
-		HttpGet httpGet = new HttpGet(uri);
-		InputStream input = null;
-		try {
-			CloseableHttpResponse response = httpclient.execute(httpGet);
-			HttpEntity entity = response.getEntity();
-			input = entity.getContent();
-
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return input;
-	}
-
+	
 	public CloseableHttpResponse Get(String url) {
 		CloseableHttpResponse response = null;
 		HttpGet httpGet = new HttpGet(url);
@@ -121,6 +104,24 @@ public class HttpClient {
 		}
 		return response;
 	}
+	
+	public InputStream Get_InputStream(String uri) {
+		HttpGet httpGet = new HttpGet(uri);
+		InputStream input = null;
+		try {
+			CloseableHttpResponse response = httpclient.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			input = entity.getContent();
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return input;
+	}
 
 	public InputStream Get_InputStream(String url, Cookie cookie) {
 		// Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
@@ -148,18 +149,6 @@ public class HttpClient {
 		return null;
 	}
 
-	public InputStream Post_InputStream(String uri, List<NameValuePair> list) {
-		try {
-			return Post(uri, list).getEntity().getContent();
-		} catch (UnsupportedOperationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 	public CloseableHttpResponse Post(String uri, List<NameValuePair> list){
 		HttpPost httpPost = new HttpPost(uri);
 		CloseableHttpResponse response2 =null;
@@ -180,6 +169,20 @@ public class HttpClient {
 		}
 		return response2;
 	}
+	
+	public InputStream Post_InputStream(String uri, List<NameValuePair> list) {
+		try {
+			return Post(uri, list).getEntity().getContent();
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void getYZM() {
 		InputStream yzm = Get_InputStream(yanzheng);
 		File yzmFile = new File("yzm.png");
@@ -210,10 +213,8 @@ public class HttpClient {
 	}
 
 	public boolean login() {
-//		System.out.println("请输入验证码登录！");
 		getYZM();
 		String yzmbak = recogYZM(new File("yzm.png"));
-		// String yzmStr = new Scanner(System.in).nextLine();
 		List<NameValuePair> lists = new ArrayList<NameValuePair>();
 		lists.add(new BasicNameValuePair("number", name));
 		lists.add(new BasicNameValuePair("passwd", pass));
@@ -235,29 +236,31 @@ public class HttpClient {
 		}
 		else{
 			Cookie cookie = cookieStore.getCookies().get(0);
-			String name = cookie.getName();
-			String value = cookie.getValue();
-			if (!cookiefile.exists()) {
-				try {
-					cookiefile.createNewFile();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			try {
-				BufferedWriter bfr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(cookiefile)));
-				bfr.write(name);
-				bfr.newLine();
-				bfr.write(value);
-				bfr.flush();
-				bfr.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			storeCookie(cookie);
 		}
 		return true;
 	}
-
+	public boolean isLogin(){
+		boolean flag=true;
+		CloseableHttpResponse borrowResponse = Get(current_book);
+		CloseableHttpResponse loginResponse = Get(loginpage);
+		String pageBorrow;
+		String pageLogin;
+		try {
+			pageBorrow = IOUtils.toString(borrowResponse.getEntity().getContent());
+			pageLogin = IOUtils.toString(loginResponse.getEntity().getContent());
+			if (pageBorrow.equals(pageLogin)) {
+				flag=false;
+			}
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	public String getName(){
 		CloseableHttpResponse borrowResponse = Get(read_info);
 		Document doc = null;
@@ -301,7 +304,7 @@ public class HttpClient {
 		p.setTelephone(tds.get(25).ownText().trim());
 		return p;
 	}
-public void getBorrowBooks(Cookie cookie) {
+	public void getBorrowBooks(Cookie cookie) {
 		CloseableHttpResponse borrowResponse = Get(current_book, cookie);
 		CloseableHttpResponse loginResponse = Get(loginpage);
 		String pageBorrow = null;
@@ -405,7 +408,27 @@ public void getBorrowBooks(Cookie cookie) {
 		}
 		return cookie;
 	}
-
+	public void storeCookie(Cookie cookie){
+		String name = cookie.getName();
+		String value = cookie.getValue();
+		if (!cookiefile.exists()) {
+			try {
+				cookiefile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			BufferedWriter bfr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(cookiefile)));
+			bfr.write(name);
+			bfr.newLine();
+			bfr.write(value);
+			bfr.flush();
+			bfr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) throws Exception {
 		// //
 		TimerTask task = new TimerTask() {
@@ -413,7 +436,8 @@ public void getBorrowBooks(Cookie cookie) {
 			public void run() {
 				// TODO Auto-generated method stub
 				HttpClient client = new HttpClient();
-				Cookie cookie = client.getCookie();
+				//Cookie cookie = client.getCookie();
+				
 				client.getBorrowBooks();
 			}
 		};

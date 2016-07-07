@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +14,7 @@ public class MyParser {
 	static int each_width=11;
 	static int height=10;
 	static int black=-16514556;
+	static int tempalteInt[]={36, 27, 32, 31, 35, 37, 39, 26, 40, 39};
 	public static void main(String[] args) throws Exception {
 //		BufferedImage bfimage=ImageIO.read(new File("yzm.png"));
 //		BufferedImage trueImage=bfimage.getSubimage(6, 16, 44, 10);
@@ -31,19 +33,11 @@ public class MyParser {
 //		jundug69(test2);
 	}
 	public static String recogYZM(File f){
-		int tempalteInt[]=null;
 		StringBuffer buffer=new StringBuffer();
-		try {
-			tempalteInt = getTemplateInt();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		BufferedImage bfimage=null;
 		try {
 			bfimage = ImageIO.read(f);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		BufferedImage trueImage=gettrueImage(bfimage);
