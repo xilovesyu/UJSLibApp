@@ -54,20 +54,20 @@ public class MyParser {
 			for (int j = 0; j < tempalteInt.length; j++) {
 				if(tempInt!=39){
 					if(tempInt==tempalteInt[j]){
-						System.out.print(j);
+//						System.out.print(j);
 						buffer.append(j);
 					}
 				}
 				else{
 					//分辨6 和 9
 					int num=jundug69(temp);
-					System.out.print(num);
+//					System.out.print(num);
 					buffer.append(num);
 					break;
 				}
 			}
 		}
-		System.out.println();
+//		System.out.println();
 		return buffer.toString();
 	}
 	public static BufferedImage gettrueImage(BufferedImage image){

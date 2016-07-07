@@ -37,6 +37,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.xixi.Model.Book;
+import com.xixi.Model.Person;
 import com.xixi.Recog.MyParser;
 
 public class HttpClient {
@@ -50,6 +52,7 @@ public class HttpClient {
 	String url = "http://huiwen.ujs.edu.cn:8080/reader/redr_verify.php";
 	String read_info = "http://huiwen.ujs.edu.cn:8080/reader/redr_info.php";
 	String current_book = "http://huiwen.ujs.edu.cn:8080/reader/book_lst.php";
+	String user_detail="http://huiwen.ujs.edu.cn:8080/reader/redr_info_rule.php";
 	File cookiefile = new File("cookie/cookie.txt");
 	public void setName(String name){
 		this.name=name;
@@ -207,7 +210,7 @@ public class HttpClient {
 	}
 
 	public boolean login() {
-		System.out.println("请输入验证码登录！");
+//		System.out.println("请输入验证码登录！");
 		getYZM();
 		String yzmbak = recogYZM(new File("yzm.png"));
 		// String yzmStr = new Scanner(System.in).nextLine();
@@ -269,6 +272,35 @@ public class HttpClient {
 		}
 		return doc.getElementsByClass("profile-name").get(0).text();
 	}
+	public Person getProfile(){
+		CloseableHttpResponse indexResponse = Get(read_info);
+		CloseableHttpResponse userDetailResponse = Get(user_detail);
+		Document indexdoc = null;
+		Document userdetaildoc = null;
+		try {
+			indexdoc = Jsoup.parse(IOUtils.toString(indexResponse.getEntity().getContent()));
+			userdetaildoc = Jsoup.parse(IOUtils.toString(userDetailResponse.getEntity().getContent()));
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Element div=userdetaildoc.getElementById("mylib_info");
+		Elements tds=div.select("td");
+		Person p=new Person();
+		p.setName(indexdoc.getElementsByClass("profile-name").get(0).text());
+		p.setTotalJiFen(indexdoc.getElementsByClass("bigger-170").get(3).text());
+		p.setAvailableJiFen(indexdoc.getElementsByClass("bigger-170").get(4).text());
+		p.setStuNum(tds.get(2).ownText().trim());
+		p.setEmail(tds.get(16).ownText().trim());
+		p.setIdNum(tds.get(17).ownText().trim());
+		p.setSex(tds.get(21).ownText().trim());
+		p.setAddress(tds.get(22).ownText().trim());
+		p.setTelephone(tds.get(25).ownText().trim());
+		return p;
+	}
 public void getBorrowBooks(Cookie cookie) {
 		CloseableHttpResponse borrowResponse = Get(current_book, cookie);
 		CloseableHttpResponse loginResponse = Get(loginpage);
@@ -298,7 +330,7 @@ public void getBorrowBooks(Cookie cookie) {
 		doc = Jsoup.parse(pageBorrow);
 		Elements table = doc.getElementsByClass("table_line");
 		Elements trs = table.select("tr");
-		for (int i = 0; i < trs.size(); i++) {
+		for (int i = 1; i < trs.size(); i++) {
 			Element tr = trs.get(i);
 			Elements tds = tr.select("td");
 			for (int j = 0; j < tds.size(); j++) {
@@ -308,7 +340,8 @@ public void getBorrowBooks(Cookie cookie) {
 			System.out.println();
 		}
 	}
-	public void getBorrowBooks(){
+	public ArrayList<Book> getBorrowBooks(){
+		ArrayList<Book> lists=new ArrayList<Book>();
 		CloseableHttpResponse borrowResponse = Get(current_book);
 		CloseableHttpResponse loginResponse = Get(loginpage);
 		String pageBorrow = null;
@@ -337,15 +370,25 @@ public void getBorrowBooks(Cookie cookie) {
 		doc = Jsoup.parse(pageBorrow);
 		Elements table = doc.getElementsByClass("table_line");
 		Elements trs = table.select("tr");
-		for (int i = 0; i < trs.size(); i++) {
+		for (int i = 1; i < trs.size(); i++) {
 			Element tr = trs.get(i);
 			Elements tds = tr.select("td");
-			for (int j = 0; j < tds.size(); j++) {
-				String text = tds.get(j).text();
-				System.out.print(text + "\t");
-			}
-			System.out.println();
+//			for (int j = 0; j < tds.size(); j++) {
+//				String text = tds.get(j).text();
+//				System.out.print(text + "\t");
+//			}
+			Book temp=new Book();
+			temp.setId(tds.get(0).text());
+			temp.setName(tds.get(1).text());
+			temp.setBorrowTime(tds.get(2).text());
+			temp.setPayTime(tds.get(3).text());
+			temp.setXuJieNum(Integer.parseInt(tds.get(4).text()));
+			temp.setBookPlace(tds.get(5).text());
+			temp.setMark(tds.get(6).text());
+//			System.out.println(temp);
+			lists.add(temp);
 		}
+		return lists;
 	}
 	public Cookie getCookie() {
 		BufferedReader bfr;
