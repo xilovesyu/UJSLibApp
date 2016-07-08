@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="com.xixi.LibApp.AppTest" time="0" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="F:\Program Files\Java\jdk1.8.0_65\jre\bin"/>
+    <property name="java.vm.version" value="25.65-b01"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="F:/Users/xijiaxiang/workspace/LibApp"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="F:\Users\xijiaxiang\workspace\LibApp"/>
+    <property name="java.runtime.version" value="1.8.0_65-b17"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="F:\Program Files\Java\jdk1.8.0_65\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="F:\Users\XIJIAX~1\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="classworlds.conf" value="D:/apache-maven-3.3.9/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="F:\Program Files\Java\jdk1.8.0_65\bin;F:\windows\Sun\Java\bin;F:\windows\system32;F:\windows;F:\Users\xijiaxiang\bin;F:\Program Files (x86)\Git\mingw32\bin;F:\Program Files (x86)\Git\usr\local\bin;F:\Program Files (x86)\Git\usr\bin;F:\Program Files (x86)\Git\usr\bin;F:\Program Files (x86)\Git\mingw32\bin;F:\Program Files (x86)\Git\usr\bin;F:\Users\xijiaxiang\bin;F:\Program Files (x86)\Python35-32\Scripts;F:\Program Files (x86)\Python35-32;F:\ProgramData\Oracle\Java\javapath;F:\windows\system32;F:\windows;F:\windows\System32\Wbem;F:\windows\System32\WindowsPowerShell\v1.0;F:\Program Files\Broadcom\Broadcom 802.11 Network Adapter\Driver;F:\Program Files\Java\jdk1.8.0_65\bin;D:\groovy-2.4.6\bin;D:\apache-maven-3.3.9\bin;F:\Program Files\Java\jdk1.8.0_65\bin;F:\Program Files\Java\jdk1.8.0_65\jre\bin;D:\apache-ant-1.9.6\bin;D:\mysql-5.6.24-winx64\bin;E:\程序安装路径\Sublime Text 3;E:\程序;装路径\Heroku\bin;F:\;Program Files (x86)\git\cmd;F:\Program Files (x86)\Git\cmd;F:\Program Files\nodejs;K:\matlab\runtime\win64;K:\matlab\bin;K:\matlab\polyspace\bin;F:\Users\xijiaxiang\AppData\Roaming\npm;F:\Program Files (x86)\Git\usr\bin\vendor_perl;F:\Program Files (x86)\Git\usr\bin\core_perl;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="F:\Users\xijiaxiang"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="user.name" value="xijiaxiang"/>
+    <property name="java.class.path" value="D:/apache-maven-3.3.9/boot/plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="F:\Program Files\Java\jdk1.8.0_65\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher assembly:assembly"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_65"/>
+    <property name="java.ext.dirs" value="F:\Program Files\Java\jdk1.8.0_65\jre\lib\ext;F:\windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="F:\Program Files\Java\jdk1.8.0_65\jre\lib\resources.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\rt.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\sunrsasign.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\jsse.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\jce.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\charsets.jar;F:\Program Files\Java\jdk1.8.0_65\jre\lib\jfr.jar;F:\Program Files\Java\jdk1.8.0_65\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\apache-maven-3.3.9"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="com.xixi.LibApp.AppTest" name="testApp" time="0"/>
+</testsuite>

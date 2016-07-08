@@ -13,7 +13,6 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,13 +39,14 @@ import org.jsoup.select.Elements;
 import com.xixi.Model.Book;
 import com.xixi.Model.Person;
 import com.xixi.Recog.MyParser;
+import com.xixi.utils.PropertiesUtils;
 
 public class HttpClient {
 
 	private CloseableHttpClient httpclient = null;
 	BasicCookieStore cookieStore = null;
 	String name = "2211508055";
-	String pass = "xyxx1231";
+	String pass =PropertiesUtils.getPro("mylibCode");
 	String loginpage = "http://huiwen.ujs.edu.cn:8080/reader/login.php";
 	String yanzheng = "http://huiwen.ujs.edu.cn:8080/reader/captcha.php";
 	String url = "http://huiwen.ujs.edu.cn:8080/reader/redr_verify.php";
@@ -291,7 +291,7 @@ public class HttpClient {
 			e.printStackTrace();
 		}
 		Element div=userdetaildoc.getElementById("mylib_info");
-		Elements tds=div.select("td");
+		Elements tds=div.select("td");//
 		Person p=new Person();
 		p.setName(indexdoc.getElementsByClass("profile-name").get(0).text());
 		p.setTotalJiFen(indexdoc.getElementsByClass("bigger-170").get(3).text());
@@ -437,11 +437,15 @@ public class HttpClient {
 				// TODO Auto-generated method stub
 				HttpClient client = new HttpClient();
 				//Cookie cookie = client.getCookie();
-				
-				client.getBorrowBooks();
+				client.login();
+				System.out.println(client.getProfile());
+				ArrayList<Book> booklist=client.getBorrowBooks();
+				for (int i = 0; i < booklist.size(); i++) {
+					System.out.println(booklist.get(i).toString());
+				}
 			}
 		};
-		new Timer(false).schedule(task, 0, 5000);
+		new Timer(false).schedule(task, 0, 21600000);
 
 	}
 

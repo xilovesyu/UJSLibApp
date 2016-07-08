@@ -1,0 +1,9 @@
+com\xixi\Model\Book.class
+com\xixi\Recog\MyParser.class
+com\xixi\HttpClient\HttpUtils.class
+com\xixi\LibApp\App.class
+demo\Test.class
+com\xixi\LibApp\Library.class
+com\xixi\Model\Person.class
+demo\HttpClient.class
+demo\HttpClient$1.class

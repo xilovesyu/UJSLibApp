@@ -3,6 +3,8 @@ package com.xixi.Model;
 import java.io.Serializable;
 
 public class Book implements Serializable {
+	
+	private static final long serialVersionUID = 2642383188330728658L;
 	String id;
 	String name;
 	String borrowTime;
